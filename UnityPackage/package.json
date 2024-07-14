@@ -1,0 +1,16 @@
+{
+    "name":  "com.projecttf.messagepackformattergenerator",
+    "version":  "1.0.0",
+    "displayName":  "MessagePack Formatter Generator",
+    "description":  "MessagePack Formatter SourceGenerator for Unity",
+    "unity":  "2022.3",
+    "keywords":  [
+                     "unity",
+                     "package",
+                     "messagepack"
+                 ],
+    "author":  {
+                   "name":  "breadpack",
+                   "email":  "kwonsanggoo@studiobside.com"
+               }
+}

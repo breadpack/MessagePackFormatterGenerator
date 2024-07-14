@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <Configurations>Debug;Release;Release-Unity</Configurations>
+        <Platforms>AnyCPU</Platforms>
+
+        <IsPackable>true</IsPackable>
+        <PackageId>MessagePackFormatterGenerator</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>BreadPack</Authors>
+        <Product>MessagePackFormatterGenerator</Product>
+        <Description>This project is a Source Generator for creating custom formatters for MessagePack. It includes utilities and code generation for efficient serialization and deserialization of custom types.</Description>
+        <PackageTags>messagepack;formatter;serialization</PackageTags>
+        <RepositoryUrl>https://github.com/breadpack/MessagePackFormatterGenerator</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis" Version="3.8.0" />
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release-Unity'">
+        <PropertyGroup>
+            <PackageOutputDir>$(SolutionDir)UnityPackage/Plugin</PackageOutputDir>
+        </PropertyGroup>
+        <Message Text="Copying DLL and PDB files to $(PackageOutputDir)" Importance="high" />
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(PackageOutputDir)" />
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).pdb" DestinationFolder="$(PackageOutputDir)" />
+    </Target>
+</Project>

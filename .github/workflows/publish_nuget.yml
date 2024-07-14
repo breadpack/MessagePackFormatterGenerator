@@ -1,0 +1,36 @@
+name: Build and publish NuGet package
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch: # This line allows manual triggering
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore MessagePackFormatterGenerator.sln
+
+      - name: Build
+        run: dotnet build MessagePackFormatterGenerator.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test MessagePackFormatterGenerator.sln --no-restore --verbosity normal
+          
+      - name: Pack
+        run: dotnet pack MessagePackFormatterGenerator/MessagePackFormatterGenerator.csproj --configuration Release --no-build --output ./nupkgs  
+
+      - name: Publish the package
+        run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
