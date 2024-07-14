@@ -15,7 +15,6 @@
         <Description>This project is a Source Generator for creating custom formatters for MessagePack. It includes utilities and code generation for efficient serialization and deserialization of custom types.</Description>
         <PackageTags>messagepack;formatter;serialization</PackageTags>
         <RepositoryUrl>https://github.com/breadpack/MessagePackFormatterGenerator</RepositoryUrl>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\README.md" Pack="true">
+      <Content Include="..\README.md">
         <Link>README.md</Link>
       </Content>
     </ItemGroup>
