@@ -8,13 +8,14 @@
         <Platforms>AnyCPU</Platforms>
 
         <IsPackable>true</IsPackable>
-        <PackageId>MessagePackFormatterGenerator</PackageId>
+        <PackageId>dev.breadpack.messagepackformattergenerator</PackageId>
         <Version>1.0.0</Version>
         <Authors>BreadPack</Authors>
         <Product>MessagePackFormatterGenerator</Product>
         <Description>This project is a Source Generator for creating custom formatters for MessagePack. It includes utilities and code generation for efficient serialization and deserialization of custom types.</Description>
         <PackageTags>messagepack;formatter;serialization</PackageTags>
         <RepositoryUrl>https://github.com/breadpack/MessagePackFormatterGenerator</RepositoryUrl>
+        <PackageReadmeFile>../README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
