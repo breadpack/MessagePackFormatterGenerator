@@ -22,6 +22,12 @@
         <PackageReference Include="Microsoft.CodeAnalysis" Version="3.8.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="..\README.md" Pack="true">
+        <Link>README.md</Link>
+      </Content>
+    </ItemGroup>
+
     <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release-Unity'">
         <PropertyGroup>
             <PackageOutputDir>$(SolutionDir)UnityPackage/Plugin</PackageOutputDir>
