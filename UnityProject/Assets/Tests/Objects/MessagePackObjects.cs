@@ -30,6 +30,7 @@ namespace Tests.Objects {
 
     public class NullableStructMember : AbstractParent {
         public Struct? Struct;
+        public IntStruct? IntStruct;
     }
 
     [MessagePackObject]

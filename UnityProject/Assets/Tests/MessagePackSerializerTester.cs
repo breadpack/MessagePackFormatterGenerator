@@ -68,6 +68,10 @@ public class MessagePackSerializerTester
                 Y = 2,
                 String = "Hello",
                 Float = 3.14f,
+            },
+            IntStruct = new IntStruct()
+            {
+                a = 3,
             }
         };
         s.Struct.Value.SetDouble(3.14159);
@@ -82,6 +86,8 @@ public class MessagePackSerializerTester
         Assert.That(deserialized.Struct.Value.String, Is.EqualTo(s.Struct.Value.String));
         Assert.That(deserialized.Struct.Value.Float, Is.EqualTo(s.Struct.Value.Float));
         Assert.That(deserialized.Struct.Value.GetDouble(), Is.EqualTo(s.Struct.Value.GetDouble()));
+        Assert.NotNull(deserialized.IntStruct);
+        Assert.That(deserialized.IntStruct.Value.a, Is.EqualTo(s.IntStruct.Value.a));
     }
     
     [Test]
