@@ -4,6 +4,15 @@ using Microsoft.CodeAnalysis;
 
 namespace MessagePackFormatterGenerator {
     public static class NamedTypeSymbolExtensions {
+        public static INamedTypeSymbol GetUnderlyingOrSelfType(this INamedTypeSymbol symbol) {
+            // Nullable 타입인지 확인하고 underlying 타입을 반환, 아니면 원래 타입을 반환
+            if (symbol.OriginalDefinition.SpecialType != SpecialType.System_Nullable_T)
+                return symbol;
+            
+            var underlyingType = symbol.TypeArguments.FirstOrDefault() as INamedTypeSymbol;
+            return underlyingType ?? symbol;
+        }
+        
         public static bool HasAttribute(this INamedTypeSymbol symbol, INamedTypeSymbol attributeSymbol, bool inherit = false) {
             if (symbol == null || attributeSymbol == null) {
                 return false;

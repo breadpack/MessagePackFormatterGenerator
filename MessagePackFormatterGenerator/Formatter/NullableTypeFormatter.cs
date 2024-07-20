@@ -25,7 +25,10 @@ namespace MessagePackFormatterGenerator {
                          .Replace(",", ".")
              + ".Nullable.Formatter.g.cs";
 
-        public string Namespace => TypeSymbol.ContainingNamespace?.ToDisplayString();
+        public string Namespace
+            => !string.IsNullOrWhiteSpace(TypeSymbol.ContainingNamespace?.Name)
+                   ? TypeSymbol.ContainingNamespace?.ToDisplayString()
+                   : string.Empty;
 
         public SourceText GenerateSource() {
             var sb = new StringBuilder();
@@ -46,7 +49,7 @@ namespace MessagePackFormatterGenerator {
         }
 
         private void BeginNamespace(StringBuilder sb) {
-            if (TypeSymbol.ContainingNamespace == null) return;
+            if (string.IsNullOrWhiteSpace(TypeSymbol.ContainingNamespace?.Name)) return;
             sb.AppendLine($"namespace {TypeSymbol.ContainingNamespace.ToDisplayString()} {{");
         }
 
@@ -60,6 +63,7 @@ namespace MessagePackFormatterGenerator {
             sb.AppendLine("                var resolver = options.Resolver;");
             sb.AppendLine($"                var formatter = resolver.GetFormatterWithVerify<{UnderlyingTypeSymbol.ToDisplayString()}>();");
             sb.AppendLine("                formatter.Serialize(ref writer, value.Value, options);");
+            sb.AppendLine("                return;");
             sb.AppendLine("            }");
             sb.AppendLine("            writer.WriteNil();");
             sb.AppendLine("        }");
@@ -83,7 +87,7 @@ namespace MessagePackFormatterGenerator {
             sb.AppendLine("using System.Reflection;");
             sb.AppendLine("using MessagePack;");
             sb.AppendLine("using MessagePack.Formatters;");
-            if (TypeSymbol.ContainingNamespace != null) {
+            if (!string.IsNullOrWhiteSpace(TypeSymbol.ContainingNamespace?.Name)) {
                 sb.AppendLine($"using {TypeSymbol.ContainingNamespace.ToDisplayString()};");
             }
 
@@ -95,6 +99,7 @@ namespace MessagePackFormatterGenerator {
         }
 
         private void EndNamespace(StringBuilder sb) {
+            if (string.IsNullOrWhiteSpace(TypeSymbol.ContainingNamespace?.Name)) return;
             sb.AppendLine("}");
         }
     }

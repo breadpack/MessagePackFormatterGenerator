@@ -8,7 +8,7 @@ namespace MessagePackFormatterGenerator {
             sb.AppendLine("using System.Reflection;");
             sb.AppendLine("using MessagePack;");
             sb.AppendLine("using MessagePack.Formatters;");
-            if (TypeSymbol.ContainingNamespace != null) {
+            if (!string.IsNullOrWhiteSpace(TypeSymbol.ContainingNamespace?.Name)) {
                 sb.AppendLine($"using {TypeSymbol.ContainingNamespace.ToDisplayString()};");
             }
 
@@ -16,7 +16,7 @@ namespace MessagePackFormatterGenerator {
         }
 
         private void BeginNamespace(StringBuilder sb) {
-            if (TypeSymbol.ContainingNamespace == null) return;
+            if (string.IsNullOrWhiteSpace(TypeSymbol.ContainingNamespace?.Name)) return;
             sb.AppendLine($"namespace {TypeSymbol.ContainingNamespace.ToDisplayString()} {{");
         }
 
@@ -29,6 +29,7 @@ namespace MessagePackFormatterGenerator {
         }
 
         private void EndNamespace(StringBuilder sb) {
+            if (string.IsNullOrWhiteSpace(TypeSymbol.ContainingNamespace?.Name)) return;
             sb.AppendLine("}");
         }
     }

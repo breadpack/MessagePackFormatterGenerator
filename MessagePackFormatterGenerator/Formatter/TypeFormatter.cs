@@ -54,7 +54,10 @@ namespace MessagePackFormatterGenerator {
                          .Replace(",", ".")
              + ".Formatter.g.cs";
 
-        public string Namespace => TypeSymbol.ContainingNamespace?.ToDisplayString();
+        public string Namespace
+            => !string.IsNullOrWhiteSpace(TypeSymbol.ContainingNamespace?.Name)
+                   ? TypeSymbol.ContainingNamespace?.ToDisplayString()
+                   : string.Empty;
 
         public SourceText GenerateSource() {
             var sb = new StringBuilder();

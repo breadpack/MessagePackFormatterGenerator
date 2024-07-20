@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagePackFormatterGenerat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{09AD53BD-1726-4C30-9C0F-90723C443D42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestObject", "TestObject\TestObject.csproj", "{4672F5F8-369E-4456-AB30-4FEA9D2BBB59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,11 @@ Global
 		{09AD53BD-1726-4C30-9C0F-90723C443D42}.Release|Any CPU.Build.0 = Release|Any CPU
 		{09AD53BD-1726-4C30-9C0F-90723C443D42}.Release-Unity|Any CPU.ActiveCfg = Release|Any CPU
 		{09AD53BD-1726-4C30-9C0F-90723C443D42}.Release-Unity|Any CPU.Build.0 = Release|Any CPU
+		{4672F5F8-369E-4456-AB30-4FEA9D2BBB59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4672F5F8-369E-4456-AB30-4FEA9D2BBB59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4672F5F8-369E-4456-AB30-4FEA9D2BBB59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4672F5F8-369E-4456-AB30-4FEA9D2BBB59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4672F5F8-369E-4456-AB30-4FEA9D2BBB59}.Release-Unity|Any CPU.ActiveCfg = Debug|Any CPU
+		{4672F5F8-369E-4456-AB30-4FEA9D2BBB59}.Release-Unity|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
