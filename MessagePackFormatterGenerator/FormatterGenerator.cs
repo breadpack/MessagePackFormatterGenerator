@@ -31,48 +31,14 @@ namespace MessagePackFormatterGenerator {
             }
 
             // Get messagepack assembly symbol
-            var messagePackAssemblyMetadataRef = compilation.References
-                                                            .FirstOrDefault(r => r.Display.Contains("MessagePack.dll"));
-
-            if (messagePackAssemblyMetadataRef == null) {
-                context.ReportDiagnostic(
-                    Diagnostic.Create(
-                        new(
-                            "MSG0001",
-                            "MessagePack assembly not found",
-                            "MessagePack assembly not found",
-                            "MessagePackFormatterGenerator",
-                            DiagnosticSeverity.Error,
-                            true
-                        ),
-                        Location.None
-                    )
-                );
-                return;
-            }
-
-            var messagePackAssemblySymbol = compilation.GetAssemblyOrModuleSymbol(messagePackAssemblyMetadataRef) as IAssemblySymbol;
-            if (messagePackAssemblySymbol == null) {
-                context.ReportDiagnostic(
-                    Diagnostic.Create(
-                        new(
-                            "MSG0002",
-                            "MessagePack assembly not found",
-                            "MessagePack assembly not found",
-                            "MessagePackFormatterGenerator",
-                            DiagnosticSeverity.Error,
-                            true
-                        ),
-                        Location.None
-                    )
-                );
-                return;
-            }
-
             var formatterInterfaceSymbol = compilation.GetTypeByMetadataName("MessagePack.Formatters.IMessagePackFormatter`1");
-            var predefinedFormatters     = FindTypeArgumentsImplementingInterface(messagePackAssemblySymbol.GlobalNamespace, formatterInterfaceSymbol)
-                .Distinct()
-                .ToArray();
+            var predefinedFormatters = compilation.References
+                                                  .Select(r => compilation.GetAssemblyOrModuleSymbol(r))
+                                                  .OfType<IAssemblySymbol>()
+                                                  .SelectMany(r => FindTypeArgumentsImplementingInterface(r.GlobalNamespace, formatterInterfaceSymbol))
+                                                  .Distinct()
+                                                  .Where(t => t != null)
+                                                  .ToArray();
 
             var classSymbols  = FindAttribetedClasses(receiver, compilation, messagePackAttributeSymbol);
             var structSymbols = FindAttributedStructs(receiver, compilation, messagePackAttributeSymbol);
