@@ -9,7 +9,7 @@
 
         <IsPackable>true</IsPackable>
         <PackageId>dev.breadpack.messagepackformattergenerator</PackageId>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
         <Authors>BreadPack</Authors>
         <Product>MessagePackFormatterGenerator</Product>
         <Description>This project is a Source Generator for creating custom formatters for MessagePack. It includes utilities and code generation for efficient serialization and deserialization of custom types.</Description>
