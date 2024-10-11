@@ -5,6 +5,9 @@ using Microsoft.CodeAnalysis;
 namespace MessagePackFormatterGenerator {
     public static class NamedTypeSymbolExtensions {
         public static INamedTypeSymbol GetUnderlyingOrSelfType(this INamedTypeSymbol symbol) {
+            if (symbol.NullableAnnotation == NullableAnnotation.Annotated) {
+                return symbol.OriginalDefinition;
+            }
             // Nullable 타입인지 확인하고 underlying 타입을 반환, 아니면 원래 타입을 반환
             if (symbol.OriginalDefinition.SpecialType != SpecialType.System_Nullable_T)
                 return symbol;
@@ -94,6 +97,17 @@ namespace MessagePackFormatterGenerator {
         public static IEnumerable<INamedTypeSymbol> GetRelatedTypes(this INamedTypeSymbol symbol, bool recursive = false) {
             var collectedTypes = new HashSet<INamedTypeSymbol>();
             return symbol.GetRelatedTypes(collectedTypes, recursive);
+        }
+        
+        public static bool IsMatchWith(this INamedTypeSymbol typeSymbol, INamedTypeSymbol predefinedGenericType, SymbolEqualityComparer comparer = null) {
+            if (!predefinedGenericType.IsGenericType)
+                return typeSymbol.Equals(predefinedGenericType, comparer ?? SymbolEqualityComparer.Default);
+
+            if (typeSymbol.OriginalDefinition.Equals(predefinedGenericType.OriginalDefinition, comparer ?? SymbolEqualityComparer.Default)) {
+                return true;
+            }
+
+            return typeSymbol.AllInterfaces.Any(i => i.OriginalDefinition.Equals(predefinedGenericType, SymbolEqualityComparer.Default));
         }
 
         public static IEnumerable<INamedTypeSymbol> GetRelatedTypes(this INamedTypeSymbol typeSymbol, HashSet<INamedTypeSymbol> collectedTypes, bool recursive) {

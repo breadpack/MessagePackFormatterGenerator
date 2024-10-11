@@ -1,4 +1,5 @@
-﻿using MessagePack;
+﻿using System.Collections.Generic;
+using MessagePack;
 #if UNITY_2022_3_OR_NEWER
 using Unity.Plastic.Newtonsoft.Json;
 #else
@@ -42,6 +43,9 @@ namespace Tests.Objects {
 
         public fixed char Name[10];
         public fixed long Long[20];
+        
+        public List<int>          List;
+        public Dictionary<string, float> Dictionary;
     }
 
     public struct BlittableNestedStruct {

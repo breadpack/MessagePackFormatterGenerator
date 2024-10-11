@@ -21,9 +21,6 @@ namespace MessagePackFormatterGenerator {
                 return;
             }
 
-            // if (!Debugger.IsAttached)
-            //     Debugger.Launch();
-
             var compilation                = context.Compilation;
             var messagePackAttributeSymbol = compilation.GetTypeByMetadataName(AttributeNames.MessagePackObject);
             if (messagePackAttributeSymbol == null) {
@@ -32,6 +29,10 @@ namespace MessagePackFormatterGenerator {
 
             // Get messagepack assembly symbol
             var formatterInterfaceSymbol = compilation.GetTypeByMetadataName("MessagePack.Formatters.IMessagePackFormatter`1");
+            if(formatterInterfaceSymbol == null) {
+                return;
+            }
+            
             var predefinedFormatters = compilation.References
                                                   .Select(r => compilation.GetAssemblyOrModuleSymbol(r))
                                                   .OfType<IAssemblySymbol>()
@@ -54,15 +55,21 @@ namespace MessagePackFormatterGenerator {
 
             // 현재 컨텍스트에 포함된 타입들만 필터링
             var formatters = allTypes
-                             .Where(t => !predefinedFormatters.Contains(t))
+                             .Where(t => !predefinedFormatters.Any(p => t.IsMatchWith(p))
+                                      && t.SpecialType != SpecialType.System_Nullable_T
+                                         && t.TypeKind != TypeKind.Interface
+                                         && !(t.TypeKind == TypeKind.Class && t.IsAbstract))
                              .Select(t => new TypeFormatter(t))
                              .Cast<ITypeFormatter>()
                              .ToArray();
 
+            // if (!Debugger.IsAttached) {
+            //     Debugger.Launch();
+            // }
+
             if (formatters.Length == 0) {
                 return;
             }
-
             formatters = formatters.Concat(
                                        formatters.Where(f => f.TypeKind == TypeKind.Struct)
                                                  .Select(f => new NullableTypeFormatter(f.TypeSymbol))
