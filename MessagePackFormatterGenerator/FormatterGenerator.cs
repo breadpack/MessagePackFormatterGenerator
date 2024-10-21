@@ -58,7 +58,8 @@ namespace MessagePackFormatterGenerator {
                              .Where(t => !predefinedFormatters.Any(p => t.IsMatchWith(p))
                                       && t.SpecialType != SpecialType.System_Nullable_T
                                          && t.TypeKind != TypeKind.Interface
-                                         && !(t.TypeKind == TypeKind.Class && t.IsAbstract))
+                                         && !(t.TypeKind == TypeKind.Class && t.IsAbstract)
+                                         && t.DeclaredAccessibility == Accessibility.Public)
                              .Select(t => new TypeFormatter(t))
                              .Cast<ITypeFormatter>()
                              .ToArray();

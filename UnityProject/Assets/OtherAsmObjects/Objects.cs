@@ -1,6 +1,10 @@
-public struct IntStruct
+internal struct InternalStruct
 {
     public   int    a;
-    internal float  b;
-    internal string str;
+    internal int    b;
+}
+public struct IntStruct
+{
+    public   int              a;
+    internal InternalStruct[] b;
 }
