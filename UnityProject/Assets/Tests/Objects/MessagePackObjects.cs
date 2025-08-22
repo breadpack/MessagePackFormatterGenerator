@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 #endif
 
 namespace Tests.Objects {
-    [MessagePackObject]
     public abstract class AbstractParent { }
 
     public abstract class AbstractParentWithoutAttribute { }
@@ -29,6 +28,7 @@ namespace Tests.Objects {
         public double GetDouble()             => Double;
     }
 
+    [MessagePackObject]
     public class NullableStructMember : AbstractParent {
         public Struct? Struct;
         public IntStruct? IntStruct;

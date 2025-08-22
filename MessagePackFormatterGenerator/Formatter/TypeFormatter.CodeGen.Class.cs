@@ -21,6 +21,7 @@ namespace MessagePackFormatterGenerator {
         }
 
         private void BeginClass(StringBuilder sb) {
+            sb.AppendLine($"    [ExcludeFormatterFromSourceGeneratedResolver]");
             sb.AppendLine($"    public class {FormatterName} : IMessagePackFormatter<{TypeString}> {{");
         }
 
